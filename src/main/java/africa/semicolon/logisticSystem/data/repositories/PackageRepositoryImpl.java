@@ -1,11 +1,15 @@
 package africa.semicolon.logisticSystem.data.repositories;
 
 import africa.semicolon.logisticSystem.data.models.Package;
+import africa.semicolon.logisticSystem.data.models.Sender;
+import africa.semicolon.logisticSystem.services.SenderService;
+import africa.semicolon.logisticSystem.services.SenderServiceImpl;
 
 import java.util.*;
 
 public class PackageRepositoryImpl implements PackageRepository {
     private  final Map<Integer, Package> database = new HashMap<>();
+    private final SenderService senderService = new SenderServiceImpl();
     @Override
     public Package save(Package aPackage) {
         Integer id = null;
@@ -41,5 +45,16 @@ public class PackageRepositoryImpl implements PackageRepository {
     @Override
     public Package findPackageById(Integer id) {
         return  database.get(id);
+    }
+
+    @Override
+    public Package findPackageBySenderEmail(String email) {
+       Sender sender = senderService.findSenderByEmail(email);
+       Set<Integer> keys = database.keySet();
+       for (Integer key : keys){
+           if(Objects.equals(database.get(key).getSenderEmail(), sender.getEmailAddress()))
+               return database.get(key);
+       }
+       return null;
     }
 }

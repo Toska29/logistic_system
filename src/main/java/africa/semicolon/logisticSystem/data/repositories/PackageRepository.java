@@ -11,4 +11,6 @@ public interface PackageRepository {
     void delete(Package aPackage);
     void delete(Integer id);
     Package findPackageById(Integer id);
+
+    Package findPackageBySenderEmail(String email);
 }

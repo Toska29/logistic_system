@@ -28,4 +28,8 @@ public class PackageServiceImpl implements PackageService {
     public Package findMyPackageWithMy(Integer id) {
         return packageRepository.findPackageById(id);
     }
+
+    public Package findPackageWithSenderEmail(String email){
+        return packageRepository.findPackageBySenderEmail(email);
+    }
 }
